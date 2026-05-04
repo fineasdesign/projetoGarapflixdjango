@@ -27,7 +27,7 @@ TOKEN_CSRF = os.getenv('TOKEN_CSRF')
 if TOKEN_CSRF:
     SECRET_KEY = TOKEN_CSRF
     CSRF_TRUSTED_ORIGINS = ['https://projetogarapflixdjango-production.up.railway.app']
-else
+else:
     SECRET_KEY = 'django-insecure-_gx_3p4%i-6x*=m#wet&i4s=o2%irx7@m6j!11p1b*-5!e(jbn'
 
 # SECURITY WARNING: don't run with debug turned on in production!
