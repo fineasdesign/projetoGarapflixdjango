@@ -6,12 +6,28 @@ class FilmeConfig(AppConfig):
     name = 'filme'
 
     def ready(self):
-        from .models import Usuario
         import os
+        from django.db.utils import ProgrammingError, OperationalError
+        from .models import Usuario
+
 
         email = os.getenv('EMAIL_ADMIN')
         senha = os.getenv('SENHA_ADMIN')
 
-        usuarios = Usuario.objects.filter(email=email)
-        if not usuarios:
-            Usuario.objects.create_superuser(username='admin', email=email, password=senha, is_active=True, is_staff=True)
+        try:
+            if not email or not senha:
+                return
+
+
+            usuarios = Usuario.objects.filter(email=email)
+            if not usuarios:
+                Usuario.objects.create_superuser(
+                    username='admin',
+                    email=email,
+                    password=senha,
+                    is_active=True,
+                    is_staff=True,
+                    is_superuser=True
+                )
+        except (ProgrammingError, OperationalError):
+            return
